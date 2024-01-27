@@ -3,7 +3,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.prompts import PromptTemplate
 
 def summarize(llm, documents):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=3000)
     docs = text_splitter.split_documents(documents)
     combine_template = """{text}
     You summarize this document in the following format.
