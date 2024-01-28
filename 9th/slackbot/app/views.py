@@ -21,6 +21,7 @@ processed_challenge = set()
 @require_POST
 def slack_events(request):
     json_data = json.loads(request.body)
+    print(json_data)
 
     # 이벤트 처리
     if 'challenge' in json_data:
