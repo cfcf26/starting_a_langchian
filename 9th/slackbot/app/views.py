@@ -15,7 +15,6 @@ slack_token = os.getenv('SLACK_BOT_TOKEN')
 client = WebClient(token=slack_token)
 
 processed_events = set()
-processed_challenge = set()
 
 @csrf_exempt
 @require_POST
@@ -24,8 +23,10 @@ def slack_events(request):
     print(json_data)
 
     # 이벤트 처리
-    if processed_challenge == json_data['challenge']:
+    if 'challenge' in json_data:
+        # 'challenge' 값을 응답으로 반환합니다.
         return JsonResponse({'challenge': json_data['challenge']})
+
     event_id = json_data['event_id']
     # 이미 처리된 event_id인지 확인
     if event_id in processed_events:
