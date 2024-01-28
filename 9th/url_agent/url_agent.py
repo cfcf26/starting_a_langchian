@@ -1,4 +1,5 @@
 from langchain.agents import tool
+from langchain.schema.agent import AgentFinish
 
 from image_caption import load_image_caption
 from youtube_loader import load_youtube
@@ -24,18 +25,22 @@ def summarize_web(url):
     """Describes a web page"""
     documents = load_web(url)
     summarize_to_notion(url, documents, 'Web')
+    return AgentFinish(log="summarize_web", return_values={"output": "작업 완료!"})
     
 @tool
 def summarize_youtube(url):
     """Describes a youtube video"""
     documents = load_youtube(url)
+    print(documents)
     summarize_to_notion(url, documents, 'Youtube')
+    return AgentFinish(log="summarize_youtube", return_values={"output": "작업 완료!"})
     
 @tool
 def summarize_image(url):
     """Describes an image"""
     documents = load_image_caption(url)
     summarize_to_notion(url, documents, 'Image')
+    return AgentFinish(log="summarize_image", return_values={"output": "작업 완료!"})
 
 tools = [summarize_web, summarize_youtube, summarize_image]
 
