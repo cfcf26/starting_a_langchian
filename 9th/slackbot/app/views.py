@@ -14,8 +14,6 @@ from url_agent import URLAgent
 slack_token = os.getenv('SLACK_BOT_TOKEN')
 client = WebClient(token=slack_token)
 
-processed_events = set()
-
 @csrf_exempt
 @require_POST
 def slack_events(request):
@@ -29,11 +27,6 @@ def slack_events(request):
     # 'event' 객체와 'event_id' 확인
     if 'event' in json_data and 'event_id' in json_data:
         event = json_data['event']
-        event_id = json_data['event_id']
-
-        # 이미 처리된 이벤트인지 확인
-        if event_id in processed_events:
-            return JsonResponse({'status': 'OK'})  # 중복 요청 방지
 
         # 'text' 필드가 있는 메시지 이벤트인 경우 처리
         if event.get('type') == 'message' and event.get('channel_type') == 'im' and 'text' in event:
@@ -43,8 +36,5 @@ def slack_events(request):
             key = os.getenv('OPENAI_API_KEY')
             llm = ChatOpenAI(api_key=key, temperature=0)
             URLAgent(llm, text)
-
-            # 처리된 event_id 저장
-            processed_events.add(event_id)
 
     return JsonResponse({'status': 'OK'})
