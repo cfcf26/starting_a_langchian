@@ -20,17 +20,13 @@ def slack_events(request):
     json_data = json.loads(request.body)
     if 'challenge' in json_data:
         return JsonResponse({'challenge': json_data['challenge']})
-    
-    if json_data['event']['type'] == 'message' and 'subtype' not in json_data['event']:
-        text = json_data['event']['text']
+    event = json_data.get('event', {})
+    if event.get('type') == 'message' and event.get('subtype') != 'bot_message':
+        text = event.get('text', '')
 
         # ChatOpenAI 인스턴스 생성
         key = os.getenv('OPENAI_API_KEY')
         llm = ChatOpenAI(api_key=key, temperature=0)
-
         # URLAgent 인스턴스 생성
         URLAgent(llm, text)
-
-        # 추가적인 처리...
-
     return JsonResponse({'status': 'OK'})
