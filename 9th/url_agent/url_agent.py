@@ -31,7 +31,6 @@ def summarize_web(url):
 def summarize_youtube(url):
     """Describes a youtube video"""
     documents = load_youtube(url)
-    print(documents)
     summarize_to_notion(url, documents, 'Youtube')
     return AgentFinish(log="summarize_youtube", return_values={"output": "작업 완료!"})
     
