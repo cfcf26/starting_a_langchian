@@ -24,11 +24,8 @@ def slack_events(request):
     print(json_data)
 
     # 이벤트 처리
-    if 'challenge' in json_data:
-        # 이벤트 API 구독 확인
-        if json_data['challenge'] in processed_challenge:
-            return JsonResponse({'status': 'OK'})
-        processed_challenge.add(json_data['challenge'])
+    if processed_challenge == json_data['challenge']:
+        return JsonResponse({'challenge': json_data['challenge']})
     event_id = json_data['event_id']
     # 이미 처리된 event_id인지 확인
     if event_id in processed_events:
