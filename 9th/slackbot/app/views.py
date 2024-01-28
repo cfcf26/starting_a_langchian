@@ -20,9 +20,8 @@ def slack_events(request):
     json_data = json.loads(request.body)
     if 'challenge' in json_data:
         return JsonResponse({'challenge': json_data['challenge']})
-    event = json_data.get('event', {})
-    if event.get('type') == 'message' and event.get('subtype') != 'bot_message':
-        text = event.get('text', '')
+    if json_data['event']['type'] == 'message' and json_data['event']['channel_type'] == 'im':
+        text = json_data['event']['text']
 
         # ChatOpenAI 인스턴스 생성
         key = os.getenv('OPENAI_API_KEY')
