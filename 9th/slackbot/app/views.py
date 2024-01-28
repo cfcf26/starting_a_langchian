@@ -21,13 +21,9 @@ processed_events = set()
 def slack_events(request):
     json_data = json.loads(request.body)
 
-
-
-
-
     if 'challenge' in json_data:
         return JsonResponse({'challenge': json_data['challenge']})
-    event_id = json_data['event']['event_id']
+    event_id = json_data['event_id']
     # 이미 처리된 event_id인지 확인
     if event_id in processed_events:
         return JsonResponse({'status': 'OK'})  # 중복 요청 처리
