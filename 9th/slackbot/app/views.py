@@ -27,5 +27,6 @@ def slack_events(request):
         key = os.getenv('OPENAI_API_KEY')
         llm = ChatOpenAI(api_key=key, temperature=0)
         # URLAgent 인스턴스 생성
+        JsonResponse({'status': 'OK'})
         URLAgent(llm, text)
     return JsonResponse({'status': 'OK'})
