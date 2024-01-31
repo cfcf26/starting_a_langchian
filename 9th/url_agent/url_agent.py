@@ -1,5 +1,10 @@
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.agents.format_scratchpad.openai_tools import ( format_to_openai_tool_messages )
+from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
+
 from langchain.agents import tool
 from langchain.schema.agent import AgentFinish
+from langchain.agents import AgentExecutor
 
 from image_caption import load_image_caption
 from youtube_loader import load_youtube
@@ -42,14 +47,6 @@ def summarize_image(url):
     return AgentFinish(log="summarize_image", return_values={"output": "작업 완료!"})
 
 tools = [summarize_web, summarize_youtube, summarize_image]
-
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.agents.format_scratchpad.openai_tools import (
-    format_to_openai_tool_messages,
-)
-from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
-
-from langchain.agents import AgentExecutor
 
 def URLAgent(llm, input):
     prompt = ChatPromptTemplate.from_messages(
