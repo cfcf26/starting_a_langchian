@@ -1,1 +1,1 @@
-from .web_loader import load_web
+from .web_loader import load_web, load_web_v2
