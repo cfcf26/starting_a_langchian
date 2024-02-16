@@ -58,7 +58,6 @@ def load_image_caption(url):
         # Create a Document object with the image description
         document = Document(page_content=chat_completion.content)
 
-        # Return a list containing the single Document
         return [document]
     except Exception as e:
         print("An error occurred:", e)
