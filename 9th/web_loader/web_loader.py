@@ -3,7 +3,7 @@ from langchain_community.document_loaders import SeleniumURLLoader
 
 # 동적 웹
 def load_web_v2(url):
-    loader = SeleniumURLLoader([url], executable_path="/Users/kwak/starting_a_langchain/9th/web_loader/chromedriver")
+    loader = SeleniumURLLoader([url], executable_path="/home/ekwak/starting_a_langchian/9th/web_loader/geckodriver", browser="firefox")
     documents = loader.load()
     return documents
 
