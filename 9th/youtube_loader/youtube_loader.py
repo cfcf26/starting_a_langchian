@@ -6,11 +6,16 @@ from langchain_community.document_loaders.blob_loaders.youtube_audio import (
 from langchain_community.document_loaders.generic import GenericLoader
 from langchain_community.document_loaders.parsers import OpenAIWhisperParser
 
+import os
+import shutil
+
 def load_youtube_audio(url):
     urls = [url]
     save_dir = "~/data/youtube_audio"
     loader = GenericLoader(YoutubeAudioLoader(urls, save_dir), OpenAIWhisperParser())
     documents = loader.load()
+     # 생성된 음성 파일 삭제
+    shutil.rmtree(os.path.expanduser(save_dir))
     return documents
 
 def load_youtube(url):
