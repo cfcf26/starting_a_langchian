@@ -8,7 +8,7 @@ from langchain.agents import AgentExecutor
 
 from image_caption import load_image_caption
 from youtube_loader import load_youtube
-from web_loader import load_web
+from web_loader import load_web_v2
 from summarize_documents import summarize
 from save_to_notion import save_to_notion
 
@@ -28,7 +28,7 @@ def summarize_to_notion(url, documents, type):
 @tool
 def summarize_web(url):
     """Describes a web page"""
-    documents = load_web(url)
+    documents = load_web_v2(url)
     summarize_to_notion(url, documents, 'Web')
     return AgentFinish(log="summarize_web", return_values={"output": "작업 완료!"})
     
